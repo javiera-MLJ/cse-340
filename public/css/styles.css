@@ -4,3 +4,102 @@
 *:after {
   box-sizing: border-box;
 }
+
+.siteName a{
+  text-decoration: none;
+  font-style: oblique;
+  font-size: larger;
+  color:black;
+}
+
+.navigation{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style: none;      
+  padding: 0;             
+  margin: 0;
+  background-color: black;
+}
+
+.navigation li {
+  display: inline-block;
+  padding: 0 12px;
+}
+
+.nav-options {
+  text-decoration: none;
+  color: white;
+}
+
+.background-image{
+  position: absolute;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+  padding: 10px;
+}
+
+.text-box{
+  position:relative;
+  width:70%;
+  height: auto;
+  padding:10px;
+  background-color: rgba(128, 0, 128, 0.5)
+}
+
+.home img{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+h2 {
+  font-size: medium;
+}
+
+p{
+  font-size: 15px;
+}
+
+li{
+  font-size: 20px;
+}
+
+.upgrades {
+  text-align: center;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 100%;
+
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+}
+
+.upgrade-item {
+  background-color: #a87be4;
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box; 
+}
+
+.upgrade-item img {
+  width: 80%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.upgrade-item a {
+  display: block;
+  margin-top: 0.5rem;
+  color: blue;
+  text-decoration: none;
+  font-weight: bold;
+}
