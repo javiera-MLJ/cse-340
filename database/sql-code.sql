@@ -233,3 +233,12 @@ VALUES (
         'White',
         5
     );
+
+UPDATE public.inventory
+SET inv_description = REPLACE(inv_description, 'small interiors', 'a huge interior')
+WHERE inv_make = 'GM';
+
+UPDATE public.inventory
+SET 
+    inv_image = REPLACE(inv_image, '/images', '/vehicles/images')
+    inv_thumbnail = REPLACE(inv_thumbnail, '/images', '/vehicles/images');
