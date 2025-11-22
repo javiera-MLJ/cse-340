@@ -6,7 +6,7 @@ const Util = {}
  ************************** */
 Util.getNav = async function (req, res, next) {
     let data = await invModel.getClassifications()
-    let list = "<ul>"
+    let list ='<ul class="nav-options">'
     list += '<li><a href="/" title="Home page">Home</a></li>'
     data.rows.forEach((row) => {
         list += "<li>"
@@ -64,14 +64,19 @@ Util.buildVehicleDetailHTML = async function (vehicle) {
     let detail
     if (vehicle) {
         detail = `
-            <h1>${vehicle.inv_make} ${vehicle.inv_model}</h1>
             <section class="vehicle-detail">
-                <h2>${vehicle.inv_make} ${vehicle.inv_model}</h2>
-                <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
-                <p><strong>Price:</strong> $${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</p>
-                <p><strong>Description:</strong> ${vehicle.inv_description}</p>
-                <p><strong>Color:</strong> ${vehicle.inv_color}</p>
-                <p><strong>Miles:</strong> ${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)}</p>
+                <h1 class="vehicle-title">${vehicle.inv_make} ${vehicle.inv_model}</h1>
+
+                <div class="vehicle-detail-grid">
+                    <img class="vehicle-image" src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
+
+                    <div class="vehicle-info">
+                        <p><strong>Price:</strong> $${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</p>
+                        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+                        <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+                        <p><strong>Miles:</strong> ${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)}</p>
+                    </div>
+                </div>
             </section>
         `
     } else {
