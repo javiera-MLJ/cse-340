@@ -1,0 +1,31 @@
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+<%  }) %>
+    </ul>
+<% } %>
+<div class="form-wrapper">
+    <form action="/account/register" method="POST">
+        <h2>User Registration</h2>
+
+        <label for="firstName">First Name *</label>
+        <input type="text" name="account_firstname" id="firstName" required value="<%= locals.account_firstname %>">
+
+        <label for="lastName">Last Name *</label>
+        <input type="text" id="lastName" name="account_lastname" required value="<%= locals.account_lastname %>">
+
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="account_email" required placeholder="Enter a valid email address" value="<%= locals.account_email %>">
+
+        <label for="accountPassword">Password *</label>
+        <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
+        <input type="password" name="account_password" id="accountPassword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+        <span id="pswdBtn" style="cursor:pointer; color:blue;">Show Password</span>
+
+
+        <p><strong>All fields are required.</strong></p>
+
+        <button type="submit">Register</button>
+    </form>
+</div>

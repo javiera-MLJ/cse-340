@@ -5,8 +5,9 @@
     res.redirect('/')
 } %>
 
-<%# Message %>
-<%# messages() %>
+<% if (notice) { %>
+    <div class="notice"><%= notice %></div>
+<% } %>
 
 <%# inventory items display %>
 <%- grid %>
