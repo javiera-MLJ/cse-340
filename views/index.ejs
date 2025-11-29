@@ -1,6 +1,8 @@
 <div class="body">
     <h1>welcome to CSE Motors!</h1>
-    <%- messages() %>
+    <% if (locals.notice) { %>
+    <div class="notice"><%= notice %></div>
+<% } %>
     <section class="home">
         <div class="background-image">
             <img src="/images/vehicles/delorean-tn.jpg" alt="vehicle">
