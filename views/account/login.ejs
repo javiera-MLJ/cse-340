@@ -1,15 +1,25 @@
 <h1><%= title %></h1>
 
-<% if (notice) { %>
-    <div class="notice"><%= notice %></div>
+<% if (notice && notice.length) { %>
+    <p class="notice"><%= notice %></p>
 <% } %>
+
+<% if (errors && errors.length > 0) { %>
+    <ul class="errors">
+        <% errors.forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
+    </ul>
+<% } %>
+
+
 <div class="form-wrapper">
     <form id="loginForm" action="/account/login" method="post">
         <label for="account_email">Email:</label>
         <input type="email" id="account_email" name="account_email" required>
 
         <label for="account_password">Password:</label>
-        <input type="password" name="account_password" id="accountPassword" required>
+        <input type="password" name="account_password" id="account_password" required>
         <span id="pswdBtn" style="cursor:pointer; color:blue;">Show Password</span>
 
         <button type="submit">Login</button>

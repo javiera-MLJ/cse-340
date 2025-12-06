@@ -1,0 +1,35 @@
+<h1><%= title %></h1>
+<% if (notice && notice.length) { %><p class="notice"><%= notice %></p><% } %>
+<% if (errors && errors.length) { %>
+    <ul class="errors">
+        <% errors.forEach(e => { %><li><%= e.msg %></li><% }) %>
+    </ul>
+<% } %>
+<div class="form-wrapper">
+    <!-- Form 1: Update account info -->
+    <form action="/account/update" method="post">
+        <label for="account_firstname">First name</label>
+        <input id="account_firstname" name="account_firstname" value="<%= account_firstname %>" required>
+    
+        <label for="account_lastname">Last name</label>
+        <input id="account_lastname" name="account_lastname" value="<%= account_lastname %>" required>
+    
+        <label for="account_email">Email</label>
+        <input id="account_email" name="account_email" type="email" value="<%= account_email %>" required>
+    
+        <input type="hidden" name="account_id" value="<%= account_id %>">
+    
+        <button type="submit">Update Account</button>
+    </form>
+    
+    <!-- Form 2: Change password -->
+    <form action="/account/update-password" method="post">
+        <label for="account_password">New password</label>
+        <input id="account_password" name="account_password" type="password" required>
+        <small>Min 12 chars, include upper, lower, number, and symbol.</small>
+        
+        <input type="hidden" name="account_id" value="<%= account_id %>">
+        
+        <button type="submit">Change Password</button>
+    </form>
+</div>

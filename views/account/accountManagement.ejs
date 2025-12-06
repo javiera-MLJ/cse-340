@@ -1,0 +1,23 @@
+<div class="account-container">
+    <h1><%= title %></h1>
+    <h2>Welcome <%= fullName %></h2>
+
+    <% if (notice && notice.length) { %>
+        <p class="notice"><%= notice %></p>
+    <% } %>
+
+    <% if (account.account_type === 'Client') { %>
+        <div class="account-actions">
+            <a href="/account/update/<%= account.account_id %>" class="mgmt-btn">Update Account Information</a>
+        </div>
+    <%   } else { %>
+        <div class="account-actions">
+            <a href="/inv/" class="mgmt-btn">Go to Inventory Management</a>
+            <a href="/account/update/<%= account.account_id %>" class="mgmt-btn">Update Account Information</a>
+        </div>
+    <% } %>
+</div>
+
+
+
+

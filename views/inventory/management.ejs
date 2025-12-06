@@ -1,6 +1,6 @@
 <h1>Inventory Management</h1>
 
-<% if (locals.notice) { %>
+<% if (notice) { %>
     <div class="notice"><%= notice %></div>
 <% } %>
 
@@ -9,4 +9,10 @@
     <a class="mgmt-btn" href="/inv/add-inventory">Add Inventory</a>
 </div>
 
+<h2>Manage Inventory</h2>
+<p>Select a classification from the list</p>
+<%- classificationSelect %>
 
+<table id="inventoryDisplay"></table>
+<noscript>JavaScript must be enabled to use this page.</noscript>
+<script src="/js/inventory.js"></script>

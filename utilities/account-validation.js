@@ -120,4 +120,77 @@ validate.checkLogData = async (req, res, next) => {
     next()
 }
 
+validate.updateAccountRules = () => {
+    return [
+        body("account_firstname")
+            .trim()
+            .notEmpty()
+            .withMessage("First name is required."),
+        body("account_lastname")
+            .trim()
+            .notEmpty()
+            .withMessage("Last name is required."),
+        body("account_email")
+            .trim()
+            .isEmail()
+            .withMessage("Valid email is required.")
+            .custom(async (account_email, { req }) => {
+                const current = await accountModel.getAccountById(parseInt(req.body.account_id))
+                if (current.account_email !== account_email) {
+                    const exists = await accountModel.getAccountByEmail(account_email)
+                    if (exists) throw new Error("Email already in use.")
+                }
+                return true
+            })
+    ]
+}
+
+validate.checkUpdateAccount = async (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        const nav = await utilities.getNav()
+        return res.status(400).render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: errors.array(),
+            notice: req.flash("notice"),
+            account_id: req.body.account_id,
+            account_firstname: req.body.account_firstname,
+            account_lastname: req.body.account_lastname,
+            account_email: req.body.account_email
+        })
+    }
+    next()
+}
+
+validate.updatePasswordRules = () => {
+    return [
+        body("account_password")
+            .isLength({ min: 12 }).withMessage("Password must be at least 12 characters.")
+            .matches(/[A-Z]/).withMessage("Include an uppercase letter.")
+            .matches(/[a-z]/).withMessage("Include a lowercase letter.")
+            .matches(/[0-9]/).withMessage("Include a number.")
+            .matches(/[^A-Za-z0-9]/).withMessage("Include a symbol.")
+    ]
+}
+
+validate.checkUpdatePassword = async (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        const nav = await utilities.getNav()
+        return res.status(400).render("account/update", {
+            title: "Update Account",
+            nav,
+            errors: errors.array(),
+            notice: req.flash("notice"),
+            account_id: req.body.account_id,
+            account_firstname: req.body.account_firstname,
+            account_lastname: req.body.account_lastname,
+            account_email: req.body.account_email
+        })
+    }
+    next()
+}
+
+
 module.exports = validate

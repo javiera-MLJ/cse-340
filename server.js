@@ -18,6 +18,9 @@ const session = require("express-session")
 const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+const jwt = require("jsonwebtoken")
+
 
 /* ***********************
  * Middleware
@@ -40,6 +43,25 @@ app.use(require('connect-flash')())
 
 app.use((req, res, next) => {
   res.locals.notice = req.flash("notice")
+  next()
+})
+
+app.use(cookieParser())
+
+app.use(utilities.checkJWTToken)
+
+app.use((req, res, next) => {
+  const token = req.cookies?.jwt
+  if (token) {
+    try {
+      const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+      res.locals.account = payload
+    } catch (err) {
+      res.locals.account = null
+    }
+  } else {
+    res.locals.account = null
+  }
   next()
 })
 

@@ -4,6 +4,7 @@ const router = new express.Router()
 const invController = require("../controllers/invController")
 const utilities = require("../utilities")
 const addValidate = require("../utilities/inventory-validation")
+const auth = require("../utilities/auth-middleware")
 
 // Route to build inventory by classification view
 router.get(
@@ -20,12 +21,15 @@ router.get(
 // Route to build new name classification
 router.get(
     "/add-classification",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
     utilities.handleErrors(invController.buildAddClassification)
 )
 
-// Add Classification route (post)
 router.post(
     "/add-classification",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
     addValidate.addClassificationRules(),
     addValidate.checkAddClassificationData,
     utilities.handleErrors(invController.addClassification)
@@ -35,12 +39,15 @@ router.post(
 // Route to build add inventory view
 router.get(
     "/add-inventory",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
     utilities.handleErrors(invController.buildAddInventory)
 )
 
-// Add Inventory route (post)
 router.post(
     "/add-inventory",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
     addValidate.addInventoryRules(),
     addValidate.checkAddInventoryData,
     utilities.handleErrors(invController.addInventory)
@@ -49,7 +56,61 @@ router.post(
 // Route to management page
 router.get(
     "/",
-    utilities.handleErrors(invController.buildManagement))
+    utilities.handleErrors(invController.buildManagement)
+)
 
+// Route to management page with JSON
+router.get(
+    "/getInventory/:classification_id",
+utilities.handleErrors(invController.getInventoryJSON)
+)
+
+router.get(
+    "/edit/:inv_id",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
+    utilities.handleErrors(invController.editInventoryView)
+)
+
+router.post(
+    "/update",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
+    addValidate.addInventoryRules(),
+    addValidate.checkUpdateData,
+    utilities.handleErrors(invController.updateInventory)
+)
+
+// Add inventory (GET/POST)
+router.get(
+    "/add",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
+    utilities.handleErrors(invController.buildAddInventory)
+)
+
+router.post(
+    "/add",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
+    addValidate.addInventoryRules(),
+    addValidate.checkAddInventoryData,
+    utilities.handleErrors(invController.addInventory)
+)
+
+// Delete confirm (GET) y delete (POST)
+router.get(
+    "/delete/:inv_id",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
+    utilities.handleErrors(invController.buildDeleteConfirm)
+)
+
+router.post(
+    "/delete",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
+    utilities.handleErrors(invController.deleteInventory)
+)
 
 module.exports = router;
