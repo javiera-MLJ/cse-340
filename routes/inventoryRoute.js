@@ -56,6 +56,8 @@ router.post(
 // Route to management page
 router.get(
     "/",
+    auth.requireAuth,
+    auth.requireRole(["Employee", "Admin"]),
     utilities.handleErrors(invController.buildManagement)
 )
 
@@ -112,5 +114,11 @@ router.post(
     auth.requireRole(["Employee", "Admin"]),
     utilities.handleErrors(invController.deleteInventory)
 )
+
+
+router.get(
+    "/all", 
+    invController.buildFilteredVehicles);
+
 
 module.exports = router;

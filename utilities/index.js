@@ -8,8 +8,9 @@ require("dotenv").config()
  ************************** */
 Util.getNav = async function (req, res, next) {
     let data = await invModel.getClassifications()
-    let list ='<ul class="nav-options">'
+    let list = '<ul class="nav-options">'
     list += '<li><a href="/" title="Home page">Home</a></li>'
+    
     data.rows.forEach((row) => {
         list += "<li>"
         list +=
@@ -22,9 +23,14 @@ Util.getNav = async function (req, res, next) {
             "</a>"
         list += "</li>"
     })
+
+    // Add "All Vehicles" link at the end
+    list += '<li><a href="/inventory/all" title="View all vehicles">All Vehicles</a></li>'
+
     list += "</ul>"
     return list
 }
+
 
 /* **************************************
 * Build the classification view HTML

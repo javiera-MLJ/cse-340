@@ -1,0 +1,21 @@
+<h1><%= title %></h1>
+
+<% if (notice) { %>
+    <div class="notice"><%= notice %></div>
+<% } %>
+
+
+<form method="get" action="/inventory/all" class="filter-form">
+    <label for="minPrice">Min Price:</label>
+    <input type="number" name="minPrice" id="minPrice" value="<%= filters.minPrice || '' %>">
+    
+    <label for="maxPrice">Max Price:</label>
+    <input type="number" name="maxPrice" id="maxPrice" value="<%= filters.maxPrice || '' %>">
+    
+    <label for="minYear">Min year:</label>
+    <input type="number" name="minYear" id="minYear" value="<%= filters.minYear || '' %>">
+    
+    <button type="submit">Filtrar</button>
+</form>
+
+<%- grid %>

@@ -150,4 +150,21 @@ async function deleteInventoryItem(inv_id) {
     throw error;
   }
 }
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById, addClassification, addInventory, updateInventory, deleteInventoryItem}
+
+async function getVehiclesByFilters(minPrice, maxPrice, minYear) {
+  try {
+    const sql = `
+      SELECT * FROM public.inventory
+      WHERE inv_price BETWEEN $1 AND $2
+      AND inv_year >= $3
+      ORDER BY inv_price ASC
+    `;
+    const result = await pool.query(sql, [minPrice, maxPrice, minYear]);
+    return result.rows;
+  } catch (error) {
+    console.error("Error in getVehiclesByFilters:", error);
+    throw new Error("Database query failed");
+  }
+}
+
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById, addClassification, addInventory, updateInventory, deleteInventoryItem, getVehiclesByFilters}

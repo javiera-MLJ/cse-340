@@ -319,4 +319,30 @@ invCont.deleteInventory = async function (req, res, next) {
     }
 }
 
+invCont.buildFilteredVehicles = async function (req, res, next) {
+    try {
+        const { minPrice, maxPrice, minYear } = req.query;
+        
+        const minP = parseFloat(minPrice);
+        const maxP = parseFloat(maxPrice);
+        const year = parseInt(minYear);
+        
+        if (isNaN(minP) || isNaN(maxP) || isNaN(year)) {
+            throw new Error("Invalid filter values");
+        }
+        const data = await invModel.getVehiclesByFilters(minP, maxP, year);
+        const grid = await utilities.buildClassificationGrid(data);
+        const nav = await utilities.getNav();
+        res.render("inventory/all", {
+            title: "All Vehicles",
+            nav,
+            grid,
+            filters: { minPrice, maxPrice, minYear },
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
 module.exports = invCont
